@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/company/department")
 public class DepartmentController extends BaseController {
@@ -52,7 +53,14 @@ public class DepartmentController extends BaseController {
      */
     @PostMapping
     public Result add(@RequestBody Department department){
+        //1.设置保存的企业id
+        /**
+         * 企业id：目前使用固定值1，以后会解决
+         */
+        department.setCompanyId(parseCompanyId());
+        //2.调用service完成保存企业
         departmentService.add(department);
+        //3.构造返回结果
         return new Result(ResultCode.SUCCESS);
     }
 
@@ -61,8 +69,9 @@ public class DepartmentController extends BaseController {
      * @param department
      * @return
      */
-    @PutMapping
-    public Result update(Department department){
+    @PutMapping("{id}")
+    public Result update(@PathVariable("id") String id,@RequestBody Department department){
+        department.setId(id);
         departmentService.update(department);
         return new Result(ResultCode.SUCCESS);
     }
@@ -72,8 +81,8 @@ public class DepartmentController extends BaseController {
      * @param id
      * @return
      */
-    @DeleteMapping
-    public Result delete(String id){
+    @DeleteMapping("{id}")
+    public Result delete(@PathVariable("id") String id){
         departmentService.delete(id);
         return new Result(ResultCode.SUCCESS);
     }

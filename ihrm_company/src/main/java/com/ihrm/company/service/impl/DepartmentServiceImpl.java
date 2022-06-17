@@ -43,13 +43,14 @@ public class DepartmentServiceImpl extends BaseService implements DepartmentServ
 
     @Override
     public void update(Department department) {
-        Department depart = departmentDao.findById(department.getId()).get();
-        depart.setName(department.getName());
-        depart.setPid(department.getPid());
-        depart.setManagerId(department.getManagerId());
-        depart.setIntroduce(department.getIntroduce());
-        depart.setManager(department.getManager());
-        departmentDao.save(depart);
+        //1.根据id查询部门
+        Department dept = departmentDao.findById(department.getId()).get();
+        ////2.设置部门属性
+        dept.setCode(department.getCode());
+        dept.setIntroduce(department.getIntroduce());
+        dept.setName(department.getName());
+        //3.更新部门
+        departmentDao.save(dept);
     }
 
     @Override
