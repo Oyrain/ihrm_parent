@@ -1,5 +1,6 @@
 package com.ihrm.company.controller;
 
+import com.ihrm.common.controller.BaseController;
 import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
 import com.ihrm.company.service.CompanyService;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/company/department")
-public class DepartmentController {
+public class DepartmentController extends BaseController {
 
     @Autowired
     private DepartmentService departmentService;
@@ -27,8 +28,9 @@ public class DepartmentController {
      */
     @GetMapping
     public Result findAll(){
-        Company company = companyService.findById("1");
-        List<Department> list = departmentService.findAll();
+        Company company = companyService.findById(parseCompanyId());
+        //根据企业id查询部门
+        List<Department> list = departmentService.findAll(parseCompanyId());
         return new Result(ResultCode.SUCCESS,new DeptListResult(company,list));
     }
 

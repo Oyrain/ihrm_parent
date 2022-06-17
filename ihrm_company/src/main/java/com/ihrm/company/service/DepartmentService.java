@@ -11,7 +11,7 @@ public interface DepartmentService {
      * 查询所有部门
      * @return
      */
-    public List<Department> findAll();
+    public List<Department> findAll(String companyId);
 
     /**
      * 根据id查询部门

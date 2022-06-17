@@ -1,5 +1,6 @@
 package com.ihrm.company.service.impl;
 
+import com.ihrm.common.service.BaseService;
 import com.ihrm.common.utils.IdWorker;
 import com.ihrm.company.dao.DepartmentDao;
 import com.ihrm.company.service.DepartmentService;
@@ -12,10 +13,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.Date;
 import java.util.List;
 
 @Service
-public class DepartmentServiceImpl implements DepartmentService {
+public class DepartmentServiceImpl extends BaseService implements DepartmentService {
 
     @Autowired
     private DepartmentDao departmentDao;
@@ -23,16 +25,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private IdWorker idWorker;
 
     @Override
-    public List<Department> findAll() {
-        //根据企业id查询部门
-        String companyId = "1";
-        Specification<Department> specification = new Specification<Department>() {
-            @Override
-            public Predicate toPredicate(Root<Department> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("companyId").as(String.class),companyId);
-            }
-        };
-        return departmentDao.findAll();
+    public List<Department> findAll(String companyId) {
+        return departmentDao.findAll(getSpecification(companyId));
     }
 
     @Override
@@ -43,6 +37,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void add(Department department) {
         department.setId(idWorker.nextId()+"");
+        department.setCreateTime(new Date());
         departmentDao.save(department);
     }
 
