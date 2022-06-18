@@ -57,12 +57,13 @@ public class UserServiceImpl implements UserService {
                     list.add(criteriaBuilder.equal(root.get("departmentId").as(String.class),(String)map.get("departmentId")));
                 }
                 //根据请求的hasDept判断,是否分配部门 0未分配(hasDept == null) 1已分配(hasDept != null)
-                if(StringUtils.isEmpty(map.get("hasDept")) || "0".equals((String)map.get("hasDept"))){
-                    //已分配
-                    list.add(criteriaBuilder.isNotNull(root.get("departmentId")));
-                }else {
-                    //未分配部门
-                    list.add(criteriaBuilder.isNull(root.get("departmentId")));
+                if(!StringUtils.isEmpty(map.get("hasDept"))) {
+                    //根据请求的hasDept判断  是否分配部门 0未分配（departmentId = null），1 已分配 （departmentId ！= null）
+                    if("0".equals((String) map.get("hasDept"))) {
+                        list.add(criteriaBuilder.isNull(root.get("departmentId")));
+                    }else {
+                        list.add(criteriaBuilder.isNotNull(root.get("departmentId")));
+                    }
                 }
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
             }
