@@ -13,7 +13,7 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/system/user")
+@RequestMapping("/sys/user")
 public class UserController extends BaseController {
 
     @Autowired
@@ -24,10 +24,10 @@ public class UserController extends BaseController {
      * @return
      */
     @GetMapping
-    public Result findAll(int page, int pageSize, @RequestParam Map map){
+    public Result findAll(int page, int size, @RequestParam Map map){
         //设置当前的企业id
         map.put("companyId",parseCompanyId());
-        Page<User> userPage  = userService.findAll(map,page,pageSize);
+        Page<User> userPage  = userService.findAll(map,page,size);
 
         return new Result(ResultCode.SUCCESS,new PageResult<>(userPage.getTotalElements(),userPage.getContent()));
     }
