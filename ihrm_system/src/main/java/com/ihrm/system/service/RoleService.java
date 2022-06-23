@@ -23,6 +23,12 @@ public interface RoleService {
     public Page findSearch(String companyId,int page,int size);
 
     /**
+     * 查询所有角色
+     * @return
+     */
+    public List<Role> findAll(String companyId);
+
+    /**
      * 添加角色
      * @param id
      * @return

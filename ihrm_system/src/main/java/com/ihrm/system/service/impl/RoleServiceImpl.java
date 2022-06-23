@@ -1,5 +1,6 @@
 package com.ihrm.system.service.impl;
 
+import com.ihrm.common.service.BaseService;
 import com.ihrm.common.utils.IdWorker;
 import com.ihrm.domain.system.Role;
 import com.ihrm.system.dao.RoleDao;
@@ -14,9 +15,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends BaseService implements RoleService {
 
     @Autowired
     private RoleDao roleDao;
@@ -38,6 +40,12 @@ public class RoleServiceImpl implements RoleService {
             }
         };
         return roleDao.findAll(specification, PageRequest.of(page-1, size));
+    }
+
+    @Override
+    public List<Role> findAll(String companyId) {
+        List<Role> list = roleDao.findAll(getSpecification(companyId));
+        return list;
     }
 
     @Override

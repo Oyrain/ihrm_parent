@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/sys/role")
@@ -64,10 +66,16 @@ public class RoleController extends BaseController {
     }
 
     @GetMapping()
-    public Result findByPage(int page,int size,Role role){
-        Page<Role> rolePage = roleService.findSearch(parseCompanyId(), page, size);
+    public Result findByPage(int page,int pagesize,Role role){
+        Page<Role> rolePage = roleService.findSearch(parseCompanyId(), page, pagesize);
         PageResult pageResult = new PageResult<>(rolePage.getTotalElements(),rolePage.getContent());
         return new  Result(ResultCode.SUCCESS,pageResult);
+    }
+
+    @GetMapping("list")
+    public Result findAll(){
+        List<Role> list = roleService.findAll(parseCompanyId());
+        return new Result(ResultCode.SUCCESS,list);
     }
 
 }
