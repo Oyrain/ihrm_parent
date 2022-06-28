@@ -11,11 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-
-/**
- * 权限实体类
- */
-
 @Entity
 @Table(name = "pe_permission")
 @Getter
@@ -39,6 +34,9 @@ public class Permission implements Serializable {
      */
     private Integer type;
 
+    /**
+     * 权限编码
+     */
     private String code;
 
     /**
@@ -48,7 +46,8 @@ public class Permission implements Serializable {
 
     private String pid;
 
-    private Integer enVisible;
+    //可见状态
+    private String enVisible;
 
     public Permission(String name, Integer type, String code, String description) {
         this.name = name;

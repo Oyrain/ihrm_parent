@@ -19,7 +19,7 @@
       <module name="ihrm_common" options="-parameters" />
       <module name="ihrm_common_model" options="-parameters" />
       <module name="ihrm_company" options="-parameters" />
-      <module name="ihrm_parent" options="-parameters" />
+      <module name="ihrm_parent" options="" />
       <module name="ihrm_system" options="-parameters" />
     </option>
   </component>
