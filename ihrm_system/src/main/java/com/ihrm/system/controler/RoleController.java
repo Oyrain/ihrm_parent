@@ -82,7 +82,7 @@ public class RoleController extends BaseController {
         return new Result(ResultCode.SUCCESS,list);
     }
 
-    @PutMapping("assignPerms")
+    @PutMapping("assignPrem")
     public Result assignPerms(@RequestBody Map<String,Object> map){
         //1.获取被分配的角色id
         String roleId = (String) map.get("id");
