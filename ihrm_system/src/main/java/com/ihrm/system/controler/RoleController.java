@@ -4,13 +4,16 @@ import com.ihrm.common.controller.BaseController;
 import com.ihrm.common.entity.PageResult;
 import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
+import com.ihrm.domain.system.Permission;
 import com.ihrm.domain.system.Role;
+import com.ihrm.domain.system.response.RoleResult;
 import com.ihrm.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -62,7 +65,8 @@ public class RoleController extends BaseController {
     @GetMapping("{id}")
     public Result findById(@PathVariable("id") String id){
         Role role = roleService.findById(id);
-        return new Result(ResultCode.SUCCESS,role);
+        RoleResult roleResult = new RoleResult(role);
+        return new Result(ResultCode.SUCCESS,roleResult);
     }
 
     @GetMapping()
@@ -76,6 +80,17 @@ public class RoleController extends BaseController {
     public Result findAll(){
         List<Role> list = roleService.findAll(parseCompanyId());
         return new Result(ResultCode.SUCCESS,list);
+    }
+
+    @PutMapping("assignPerms")
+    public Result assignPerms(@RequestBody Map<String,Object> map){
+        //1.获取被分配的角色id
+        String roleId = (String) map.get("id");
+        //2.获取到权限的id列表
+        List<String> permIds = (List<String>) map.get("permIds");
+        //3.调用service完成权限分配
+        roleService.assignPerms(roleId,permIds);
+        return new Result(ResultCode.SUCCESS);
     }
 
 }

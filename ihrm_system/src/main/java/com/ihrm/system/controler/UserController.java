@@ -5,10 +5,13 @@ import com.ihrm.common.entity.PageResult;
 import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;;
 import com.ihrm.domain.system.User;
+import com.ihrm.domain.system.response.UserResult;
 import com.ihrm.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -39,8 +42,10 @@ public class UserController extends BaseController {
      */
     @GetMapping("{id}")
     public Result findById(@PathVariable String id){
+        // 添加 roleIds
         User user = userService.findById(id);
-        return new Result(ResultCode.SUCCESS,user);
+        UserResult userResult = new UserResult(user);
+        return new Result(ResultCode.SUCCESS,userResult);
     }
 
     /**
@@ -82,6 +87,23 @@ public class UserController extends BaseController {
     @DeleteMapping("{id}")
     public Result delete(@PathVariable("id") String id){
         userService.delete(id);
+        return new Result(ResultCode.SUCCESS);
+    }
+
+    /**
+     * 分配角色
+     * @param map
+     * @return
+     */
+    @PutMapping("assignRoles")
+    public Result assignRoles(@RequestBody Map<String,Object> map){
+        System.out.println(map);
+        //1.获取被分配的用户id
+        String userId = (String) map.get("id");
+        //2.获取到角色id列表
+        List<String> roleIds = (List<String>) map.get("roleIds");
+        //3.调用service完成角色分配
+        userService.assignRoles(userId,roleIds);
         return new Result(ResultCode.SUCCESS);
     }
 }

@@ -29,7 +29,7 @@ public interface RoleService {
     public List<Role> findAll(String companyId);
 
     /**
-     * 添加角色
+     * 根据id查找角色
      * @param id
      * @return
      */
@@ -46,5 +46,12 @@ public interface RoleService {
      * @param id
      */
     public void deleteById(String id);
+
+    /**
+     * 分配权限
+     * @param roleId
+     * @param permIds
+     */
+    public void assignPerms(String roleId,List<String> permIds);
 
 }
