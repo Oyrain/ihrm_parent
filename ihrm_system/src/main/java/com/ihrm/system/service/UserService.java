@@ -46,4 +46,11 @@ public interface UserService {
      * @param roleIds
      */
     public void assignRoles(String userId,List<String> roleIds);
+
+    /**
+     * 根据手机号码查询用户
+     * @param mobile
+     * @return
+     */
+    public User findByMobile(String mobile);
 }

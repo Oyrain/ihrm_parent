@@ -146,4 +146,14 @@ public class UserServiceImpl implements UserService {
         //3.更新用户
         userDao.save(user);
     }
+
+    /**
+     * 根据手机号码查询用户
+     * @param mobile
+     * @return
+     */
+    @Override
+    public User findByMobile(String mobile) {
+        return userDao.findByMobile(mobile);
+    }
 }
