@@ -93,6 +93,10 @@ public class User implements Serializable {
 
     private String departmentName;
 
+    /**
+     * 用户级别
+     */
+    private String level;
 
     @ManyToMany
     @JsonIgnore
